@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Card from "./Card";
+import { animals } from "./animals";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import "./App.css";
+
+class App extends React.Component
+{
+    constructor()
+    {
+        super();
+        this.Like = this.Like.bind(this);
+        this.CreateList = this.CreateList.bind(this);
+        this.state = {
+            zoo : [...animals] // ASK
+        };
+    }
+
+    render()
+    {
+        return(
+            <div className="container">
+                <this.CreateList />
+            </div>
+        );
+    }
+
+    CreateList()
+    {
+        const animalsList = this.state.zoo.map(animal => <Card key={animal.name} name={animal.name} likes={animal.likes} click={this.Like} />);
+        return animalsList;
+    }
+
+    Like(name)
+    {
+        let temp = [...this.state.zoo];
+        let tempAnimal = this.state.zoo.find(animal => animal.name === name);
+        tempAnimal.likes += 1;
+        this.setState({zoo : temp});
+        console.log(`Current ${name} number of likes is: ${tempAnimal.likes}`);
+    }
 }
 
 export default App;
