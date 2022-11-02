@@ -10,6 +10,7 @@ class App extends React.Component
     {
         super();
         this.Like = this.Like.bind(this);
+        this.Dislike = this.Dislike.bind(this);
         this.CreateList = this.CreateList.bind(this);
         this.RemoveCard = this.RemoveCard.bind(this);
         this.Search = this.Search.bind(this);
@@ -45,7 +46,7 @@ class App extends React.Component
         const animalsList = animalFilter.map(animal => 
         <Card key={animal.name} name={animal.name} 
         likes={animal.likes} click={this.Like} 
-        close={this.RemoveCard}/>);
+        dislike={this.Dislike} close={this.RemoveCard}/>);
         return animalsList;
     }
 
@@ -54,6 +55,15 @@ class App extends React.Component
         let temp = [...this.state.zoo];
         let tempInd = this.state.zoo.findIndex(animal => animal.name === name);
         temp[tempInd].likes += 1;
+
+        this.setState({zoo : temp});
+    }
+
+    Dislike(name)
+    {
+        let temp = [...this.state.zoo];
+        let tempInd = this.state.zoo.findIndex(animal => animal.name === name);
+        temp[tempInd].likes -= 1;
 
         this.setState({zoo : temp});
     }
