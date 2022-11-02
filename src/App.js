@@ -1,6 +1,6 @@
 import React from "react";
-import Card from "./Card";
 import { animals } from "./animals";
+import Card from "./Card";
 
 import "./App.css";
 
@@ -11,8 +11,11 @@ class App extends React.Component
         super();
         this.Like = this.Like.bind(this);
         this.CreateList = this.CreateList.bind(this);
+        this.RemoveCard = this.RemoveCard.bind(this);
+        this.Search = this.Search.bind(this);
         this.state = {
-            zoo : [...animals] // ASK
+            zoo : animals, // ASK
+            search: ""
         };
     }
 
@@ -20,25 +23,52 @@ class App extends React.Component
     {
         return(
             <div className="container">
+                <input type="text" id="search" onChange={this.Search} placeholder="Search"/>
                 <this.CreateList />
             </div>
         );
     }
+    //event.target.value
+
+    Search(event)
+    {
+        // onChange of value
+        // look into the zoo for appropriate animals
+        this.setState({search: event.target.value });
+    }
 
     CreateList()
     {
-        const animalsList = this.state.zoo.map(animal => <Card key={animal.name} name={animal.name} likes={animal.likes} click={this.Like} />);
+        const animalFilter = this.state.zoo.filter(animal =>
+        animal.name.toLowerCase().includes(this.state.search.toLowerCase()));
+
+        const animalsList = animalFilter.map(animal => 
+        <Card key={animal.name} name={animal.name} 
+        likes={animal.likes} click={this.Like} 
+        close={this.RemoveCard}/>);
         return animalsList;
     }
 
     Like(name)
     {
         let temp = [...this.state.zoo];
-        let tempAnimal = this.state.zoo.find(animal => animal.name === name);
-        tempAnimal.likes += 1;
+        let tempInd = this.state.zoo.findIndex(animal => animal.name === name);
+        temp[tempInd].likes += 1;
+
         this.setState({zoo : temp});
-        console.log(`Current ${name} number of likes is: ${tempAnimal.likes}`);
     }
+
+    RemoveCard(name)
+    {
+        let temp = [...this.state.zoo];
+        let tempInd = this.state.zoo.findIndex(animal => animal.name === name);
+        
+        if(tempInd !== null)
+            temp.splice(tempInd, 1);
+        
+        this.setState({zoo : temp});
+    }
+
 }
 
 export default App;

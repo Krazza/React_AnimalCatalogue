@@ -4,6 +4,7 @@
 }
 
 .card{
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -12,7 +13,16 @@
     background-color: wheat;
     text-align: center;
     border-radius: 12px;
-    
+}
+
+.card h2{
+    font-size: 1rem;
+}
+
+.card img{
+    object-fit: contain;
+    margin: 2.5% 5% 0 5%;
+    border-radius: 12px;
 }
 
 .likeButton{
@@ -20,9 +30,30 @@
     height: 4vh;
     border-radius: 12px;
     border-width: 0ch;
+    background-color:rgb(158, 67, 67);
+    color: white;
 }
 
 section{
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 2.5%;
+}
+
+.closeButton{
+    height: 4vh;
+    width: 2vw;
+    border-radius: 50%;
+    border-width: 0;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color:rgb(158, 67, 67);
+    color: white;
+}
+
+.closeButton:hover{
+    background-color:rgb(200, 113, 113);
 }
